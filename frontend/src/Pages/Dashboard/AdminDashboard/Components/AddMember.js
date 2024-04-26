@@ -41,6 +41,11 @@ function AddMember() {
         e.preventDefault()
         setIsLoading(true)
         if (userFullName !== null && userType !== null && age !== null && dobString !== null && gender !== null && address !== null && mobileNumber !== null && email !== null && password !== null) {
+            let isAdmin = false;
+            if (userType === "Staff") {
+                isAdmin = true;
+            }
+        
             const userData = {
                 userType: userType,
                 userFullName: userFullName,
@@ -52,7 +57,8 @@ function AddMember() {
                 address: address,
                 mobileNumber: mobileNumber,
                 email: email,
-                password: password
+                password: password,
+                isAdmin: isAdmin
             }
             try {
                 const response = await axios.post(API_URL + "api/auth/register", userData)
@@ -101,64 +107,72 @@ function AddMember() {
 
     return (
         <div>
-            <p className="dashboard-option-title">Add a Member</p>
+            <p className="dashboard-option-title">ADD NEW MEMBER</p>
             <div className="dashboard-title-line"></div>
             <form className="addmember-form" onSubmit={addMember}>
-                <div className='semanticdropdown'>
-                    <Dropdown
-                        placeholder='User Type'
-                        fluid
-                        selection
-                        options={userTypes}
-                        onChange={(event, data) => setUserType(data.value)}
-                    />
+                <div className='semanticdropdown-container'>
+                    <div className='semanticdropdown'>
+                        <Dropdown
+                            placeholder='User Type'
+                            fluid
+                            selection
+                            options={userTypes}
+                            onChange={(event, data) => setUserType(data.value)}
+                        />
+                    </div>
                 </div>
-                <label className="addmember-form-label" htmlFor="userFullName">Full Name<span className="required-field">*</span></label><br />
-                <input className="addmember-form-input" type="text" name="userFullName" value={userFullName} required onChange={(e) => setUserFullName(e.target.value)}></input><br />
+                <div style={{ marginTop: '20px' }}>
+                    <label className="addmember-form-label" htmlFor="userFullName">Full Name <span className="required-field">*</span></label>
+                    <input className="addmember-form-input" type="text" name="userFullName" value={userFullName} required onChange={(e) => setUserFullName(e.target.value)}></input>
 
-                <label className="addmember-form-label" htmlFor={userType === "Student" ? "admissionId" : "employeeId"}>{userType === "Student" ? "Admission Id" : "Employee Id"}<span className="required-field">*</span></label><br />
-                <input className="addmember-form-input" type="text" value={userType === "Student" ? admissionId : employeeId} required onChange={(e) => { userType === "Student" ? setAdmissionId(e.target.value) : setEmployeeId(e.target.value) }}></input><br />
-
-                <label className="addmember-form-label" htmlFor="mobileNumber">Mobile Number<span className="required-field">*</span></label><br />
-                <input className="addmember-form-input" type="text" value={mobileNumber} required onChange={(e) => setMobileNumber(e.target.value)}></input><br />
-
-                <label className="addmember-form-label" htmlFor="gender">Gender<span className="required-field">*</span></label><br />
-                <div className='semanticdropdown'>
-                    <Dropdown
-                        placeholder='User Type'
-                        fluid
-                        selection
-                        value={gender}
-                        options={genderTypes}
-                        onChange={(event, data) => setGender(data.value)}
-                    />
+                    <label className="addmember-form-label" htmlFor={userType === "Student" ? "admissionId" : "employeeId"}>{userType === "Student" ? "Admission Id " : "Employee Id "}<span className="required-field">*</span></label>
+                    <input className="addmember-form-input" type="text" value={userType === "Student" ? admissionId : employeeId} required onChange={(e) => { userType === "Student" ? setAdmissionId(e.target.value) : setEmployeeId(e.target.value) }}></input><br />
                 </div>
+                <div className="form-row">
+                    <label className="addmember-form-label" htmlFor="mobileNumber">Mobile Number <span className="required-field">*</span></label>
+                    <input className="addmember-form-input" type="text" value={mobileNumber} required onChange={(e) => setMobileNumber(e.target.value)}></input>
 
-                <label className="addmember-form-label" htmlFor="age">Age<span className="required-field">*</span></label><br />
-                <input className="addmember-form-input" type="text" value={age} required onChange={(e) => setAge(e.target.value)}></input><br />
+                    <label className="addmember-form-label" htmlFor="gender">Gender <span className="required-field">*</span></label>
+                    <div className='semanticdropdown-addmember'>
+                        <Dropdown
+                            placeholder='User Type'
+                            fluid
+                            selection
+                            value={gender}
+                            options={genderTypes}
+                            onChange={(event, data) => setGender(data.value)}
+                        />
+                    </div>
+                </div>
+                <div className="form-row">
+                    <label className="addmember-form-label" htmlFor="age">Age <span className="required-field">*</span></label>
+                    <input className="addmember-form-input" type="text" value={age} required onChange={(e) => setAge(e.target.value)}></input>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <label className="addmember-form-label" htmlFor="dob">Date of Birth <span className="required-field">*</span></label>
+                    <DatePicker
+                        className="date-picker-addmember"
+                        placeholderText="MM/DD/YYYY"
+                        selected={dob}
+                        onChange={(date) => { setDob(date); setDobString(moment(date).format("MM/DD/YYYY")) }}
+                        dateFormat="MM/dd/yyyy"
+                    />
+                    </div>
+                </div>
+                <div style={{ marginTop: '20px' }}>
+                    <label className="addmember-form-label" htmlFor="address">Address <span className="required-field">*</span></label>
+                    <input className="addmember-form-input address-field" value={address} type="text" required onChange={(e) => setAddress(e.target.value)}></input>
 
-                <label className="addmember-form-label" htmlFor="dob">Date of Birth<span className="required-field">*</span></label><br />
-                <DatePicker
-                    className="date-picker"
-                    placeholderText="MM/DD/YYYY"
-                    selected={dob}
-                    onChange={(date) => { setDob(date); setDobString(moment(date).format("MM/DD/YYYY")) }}
-                    dateFormat="MM/dd/yyyy"
-                />
-
-                <label className="addmember-form-label" htmlFor="address">Address<span className="required-field">*</span></label><br />
-                <input className="addmember-form-input address-field" value={address} type="text" required onChange={(e) => setAddress(e.target.value)}></input><br />
-
-                <label className="addmember-form-label" htmlFor="email">Email<span className="required-field">*</span></label><br />
-                <input className="addmember-form-input" type="email" value={email} required onChange={(e) => setEmail(e.target.value)}></input><br />
-
-                <label className="addmember-form-label" htmlFor="password">Password<span className="required-field">*</span></label><br />
-                <input className="addmember-form-input" type="password" value={password} onChange={(e) => setPassword(e.target.value)}></input><br />
-
+                    <label className="addmember-form-label" htmlFor="email">Email <span className="required-field">*</span></label>
+                    <input className="addmember-form-input" type="email" value={email} required onChange={(e) => setEmail(e.target.value)}></input><br />
+                </div>
+                <div style={{ marginTop: '20px' }}>
+                    <label className="addmember-form-label" htmlFor="password">Password <span className="required-field">*</span></label>
+                    <input className="addmember-form-input" type="password" value={password} onChange={(e) => setPassword(e.target.value)}></input><br />
+                </div>
                 <input className="addmember-submit" type="submit" value="SUBMIT" disabled={isLoading} ></input>
 
             </form>
-            <p className="dashboard-option-title">Add a Member</p>
+            <p className="dashboard-option-title">Recent Added Member</p>
             <div className="dashboard-title-line"></div>
             <table className='admindashboard-table'>
                 <tr>

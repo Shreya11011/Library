@@ -23,7 +23,7 @@
 /* Sidebar */
 
 .dashboard-options {
-  background-color: rgb(24, 33, 62);
+  background-color: rgb(34, 29, 29);
   color: wheat;
   display: flex;
   flex-direction: column;
@@ -96,7 +96,7 @@
 }
 
 .dashboard-option-title {
-  text-align: left;
+  text-align: center;
   margin: 10px 25px !important;
   font-size: 20px;
   font-weight: 800;
@@ -171,8 +171,18 @@
 /* Admin Dashboard Additions */
 
 .addbook-form-input,
-.addmember-form-input,
-.transaction-form-input {
+.addmember-form-input{
+  padding: 8px;
+  width: calc(100% - 800px); /* Adjusted width to accommodate label + margin */
+  outline: none;
+  border-radius: 5px;
+  font-size: 18px;
+  border: 1px solid rgb(219, 219, 219);
+  background-color: rgb(255, 255, 255);
+}
+
+
+.transaction-form-input{
   padding: 8px;
   width: 100%;
   max-width: 400px;
@@ -183,26 +193,55 @@
   background-color: rgb(255, 255, 255);
 }
 
-.addbook-form-label,
-.addmember-form-label,
+.addbook-form-label{
+  
+   color: black;
+    margin-left: 35px;
+    font-weight: 600;
+    font-family: 'Roboto', sans-serif;
+    margin-top: 60px;
+    font-size: 18px;
+    width: 180px; /* Fixed width for labels */
+  
+}
+
+.addmember-form-label{
+  
+  color: black;
+   margin-left: 35px;
+   font-weight: 600;
+   font-family: 'Roboto', sans-serif;
+   margin-top: 20px;
+   font-size: 18px;
+   width: 180px; /* Fixed width for labels */
+ 
+}
+
 .transaction-form-label {
   color: black;
   font-weight: 600;
-  margin-top: 10px;
+  font-family: 'Roboto', sans-serif;
+  margin-top: 20px;
   font-size: 18px;
 }
 
 .addbook-submit,
-.addmember-submit,
-.transaction-form-submit {
+.transaction-form-submit,
+.addmember-submit {
+  display: block; /* Change the display to block */
+  margin: 0 auto; /* Set top and bottom margins to 0, and left and right margins to auto */
   padding: 8px 10px;
+  width: 150px;
   border: 2px solid wheat;
-  background-color: rgb(234, 68, 74);
+  background-color: rgb(242, 62, 68);
   color: wheat;
-  font-weight: 600;
-  margin-top: 15px;
-  border-radius: 5px;
+  font-weight: 900;
+  margin-top: 55px;
+  border-radius: 15px;
+  text-align: center; /* Align the content to the center */
 }
+
+
 
 .addbook-submit:hover,
 .addmember-submit:hover,
@@ -245,7 +284,7 @@
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: center;
-  background-color: rgb(24, 33, 62);
+  background-color: rgb(34, 29, 29);
   color: white;
 }
 
@@ -268,9 +307,31 @@
   font-size: 18px;
 }
 
+.semanticdropdown-addbook {
+  width: 80%;
+  max-width: 220px;
+  margin-top: 60px;
+}
+.semanticdropdown-addmember {
+  width: 80%;
+  max-width: 290px;
+}
+
 .semanticdropdown {
   width: 100%;
   max-width: 400px;
+}
+
+.date-picker-addmember {
+  padding: 5px 10px;
+  outline: none;
+  border: 1px solid lightgray;
+  font-size: 18px;
+  margin-top: 10px;
+  max-width: 290px;
+  border-radius: 10px;
+  width: 80%;
+  margin-left: 55px;
 }
 
 @media screen and (max-width: 768px) {
@@ -284,6 +345,8 @@
   outline: none;
   border: 1px solid lightgray;
   font-size: 18px;
+  margin-top: 10px;
+  border-radius: 10px;
 }
 
 .getmember-dropdown {
@@ -292,4 +355,27 @@
 
 .returnbook-dropdown {
   margin: 25px 0px 25px 30px !important;
+}
+
+td {
+  font-weight: bold;
+}
+
+.date-picker-container {
+  display: flex;
+}
+
+.date-picker-group {
+  margin-right: 20px; /* Adjust spacing between date picker groups */
+}
+
+.semanticdropdown-container {
+  display: flex;
+  justify-content: center; /* Align items horizontally in center */
+}
+
+.form-row {
+  display: flex;
+  margin-top: 20px;
+  /* align-items: center; */
 }

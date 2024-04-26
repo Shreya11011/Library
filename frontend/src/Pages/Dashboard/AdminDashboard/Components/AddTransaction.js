@@ -15,6 +15,7 @@ function AddTransaction() {
 
     const [borrowerId, setBorrowerId] = useState("")
     const [borrowerDetails, setBorrowerDetails] = useState([])
+    const [bookDetails, setBookDetails] = useState([])
     const [bookId, setBookId] = useState("")
     const [recentTransactions, setRecentTransactions] = useState([])
     const [allMembers, setAllMembers] = useState([])
@@ -125,6 +126,22 @@ function AddTransaction() {
         getBorrowerDetails()
     }, [API_URL, borrowerId])
 
+    /* Fetching book details */
+    useEffect(() => {
+        const getBookDetails = async () => {
+            try {
+                if (bookId !== "") {
+                    const response = await axios.get(API_URL + "api/books/getbook/" + bookId)
+                    setBookDetails(response.data)
+                }
+            }
+            catch (err) {
+                console.log("Error in getting book details")
+            }
+        }
+        getBookDetails()
+    }, [API_URL, bookId])
+
 
     /* Fetching members */
     useEffect(() => {
@@ -153,16 +170,17 @@ function AddTransaction() {
             ))
             setAllBooks(allbooks)
         }
+        
         getallBooks()
     }, [API_URL])
 
 
     return (
         <div>
-            <p className="dashboard-option-title">Add a Transaction</p>
+            <p className="dashboard-option-title">ADD NEW TRANSACTION</p>
             <div className="dashboard-title-line"></div>
             <form className='transaction-form' onSubmit={addTransaction}>
-                <label className="transaction-form-label" htmlFor="borrowerId">Borrower<span className="required-field">*</span></label><br />
+                <label className="transaction-form-label" htmlFor="borrowerId">Borrower <span className="required-field">*</span></label>
                 <div className='semanticdropdown'>
                     <Dropdown
                         placeholder='Select Member'
@@ -219,7 +237,7 @@ function AddTransaction() {
                     }
                 </table>
 
-                <label className="transaction-form-label" htmlFor="bookName">Book Name<span className="required-field">*</span></label><br />
+                <label className="transaction-form-label" htmlFor="bookName">Book Name <span className="required-field">*</span></label><br />
                 <div className='semanticdropdown'>
                     <Dropdown
                         placeholder='Select a Book'
@@ -234,11 +252,15 @@ function AddTransaction() {
                 <table className="admindashboard-table shortinfo-table" style={bookId === "" ? { display: "none" } : {}}>
                     <tr>
                         <th>Available Coipes</th>
-                        <th>Reserved</th>
+                        <th>Book Status</th>
+                    </tr>
+                    <tr>
+                        <td>{bookDetails.bookCountAvailable}</td>
+                        <td>{bookDetails.bookStatus}</td>
                     </tr>
                 </table>
 
-                <label className="transaction-form-label" htmlFor="transactionType">Transaction Type<span className="required-field">*</span></label><br />
+                <label className="transaction-form-label" htmlFor="transactionType">Transaction Type <span className="required-field">*</span></label><br />
                 <div className='semanticdropdown'>
                     <Dropdown
                         placeholder='Select Transaction'
@@ -251,25 +273,30 @@ function AddTransaction() {
                 </div>
                 <br />
 
-                <label className="transaction-form-label" htmlFor="from-date">From Date<span className="required-field">*</span></label><br />
-                <DatePicker
-                    className="date-picker"
-                    placeholderText="MM/DD/YYYY"
-                    selected={fromDate}
-                    onChange={(date) => { setFromDate(date); setFromDateString(moment(date).format("MM/DD/YYYY")) }}
-                    minDate={new Date()}
-                    dateFormat="MM/dd/yyyy"
-                />
-
-                <label className="transaction-form-label" htmlFor="to-date">To Date<span className="required-field">*</span></label><br />
-                <DatePicker
-                    className="date-picker"
-                    placeholderText="MM/DD/YYYY"
-                    selected={toDate}
-                    onChange={(date) => { setToDate(date); setToDateString(moment(date).format("MM/DD/YYYY")) }}
-                    minDate={new Date()}
-                    dateFormat="MM/dd/yyyy"
-                />
+                <div className="date-picker-container">
+                    <div className="date-picker-group">
+                        <label className="transaction-form-label" htmlFor="from-date">From Date <span className="required-field">*</span></label>
+                        <DatePicker
+                            className="date-picker"
+                            placeholderText="MM/DD/YYYY"
+                            selected={fromDate}
+                            onChange={(date) => { setFromDate(date); setFromDateString(moment(date).format("MM/DD/YYYY")) }}
+                            minDate={new Date()}
+                            dateFormat="MM/dd/yyyy"
+                        />
+                    </div>
+                    <div className="date-picker-group">
+                        <label className="transaction-form-label" htmlFor="to-date">To Date <span className="required-field">*</span></label>
+                        <DatePicker
+                            className="date-picker"
+                            placeholderText="MM/DD/YYYY"
+                            selected={toDate}
+                            onChange={(date) => { setToDate(date); setToDateString(moment(date).format("MM/DD/YYYY")) }}
+                            minDate={new Date()}
+                            dateFormat="MM/dd/yyyy"
+                        />
+                    </div>
+                </div>
 
                 <input className="transaction-form-submit" type="submit" value="SUBMIT" disabled={isLoading}></input>
             </form>

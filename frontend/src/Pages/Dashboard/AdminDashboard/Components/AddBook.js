@@ -85,30 +85,24 @@ function AddBook() {
 
     return (
         <div>
-            <p className="dashboard-option-title">Add a Book</p>
+            <p className="dashboard-option-title">ADD BOOK</p>
             <div className="dashboard-title-line"></div>
             <form className='addbook-form' onSubmit={addBook}>
 
-                <label className="addbook-form-label" htmlFor="bookName">Book Name<span className="required-field">*</span></label><br />
-                <input className="addbook-form-input" type="text" name="bookName" value={bookName} onChange={(e) => { setBookName(e.target.value) }} required></input><br />
+                <label className="addbook-form-label" htmlFor="bookName">Book Name <span className="required-field">*</span></label>
+                <input className="addbook-form-input" type="text" name="bookName" value={bookName} onChange={(e) => { setBookName(e.target.value) }} required></input>
 
-                <label className="addbook-form-label" htmlFor="alternateTitle">AlternateTitle</label><br />
-                <input className="addbook-form-input" type="text" name="alternateTitle" value={alternateTitle} onChange={(e) => { setAlternateTitle(e.target.value) }}></input><br />
-
-                <label className="addbook-form-label" htmlFor="author">Author Name<span className="required-field">*</span></label><br />
+                <label className="addbook-form-label" htmlFor="author">Author Name <span className="required-field">*</span></label>
                 <input className="addbook-form-input" type="text" name="author" value={author} onChange={(e) => { setAuthor(e.target.value) }} required></input><br />
 
-                <label className="addbook-form-label" htmlFor="language">Language</label><br />
-                <input className="addbook-form-input" type="text" name="language" value={language} onChange={(e) => { setLanguage(e.target.value) }}></input><br />
+                <label className="addbook-form-label" htmlFor="language">Language </label>
+                <input className="addbook-form-input" type="text" name="language" value={language} onChange={(e) => { setLanguage(e.target.value) }}></input>
 
-                <label className="addbook-form-label" htmlFor="publisher">Publisher</label><br />
-                <input className="addbook-form-input" type="text" name="publisher" value={publisher} onChange={(e) => { setPublisher(e.target.value) }}></input><br />
-
-                <label className="addbook-form-label" htmlFor="copies">No.of Copies Available<span className="required-field">*</span></label><br />
-                <input className="addbook-form-input" type="text" name="copies" value={bookCountAvailable} onChange={(e) => { setBookCountAvailable(e.target.value) }} required></input><br />
-
-                <label className="addbook-form-label" htmlFor="categories">Categories<span className="required-field">*</span></label><br />
-                <div className="semanticdropdown">
+                <label className="addbook-form-label" htmlFor="copies">No.of Copies <span className="required-field">*</span></label>
+                <input className="addbook-form-input" type="text" name="copies" value={bookCountAvailable !== null ? bookCountAvailable : ''} onChange={(e) => { const inputValue = e.target.value;if (/^\d*$/.test(inputValue)) { setBookCountAvailable(inputValue); } }} required></input><br />
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                <label className="addbook-form-label" htmlFor="categories">Categories <span className="required-field">*</span></label>
+                <div className="semanticdropdown-addbook">
                     <Dropdown
                         placeholder='Category'
                         fluid
@@ -121,6 +115,7 @@ function AddBook() {
                     />
                 </div>
 
+                </div>
                 <input className="addbook-submit" type="submit" value="SUBMIT" disabled={isLoading}></input>
             </form>
             <div>
@@ -130,6 +125,8 @@ function AddBook() {
                     <tr>
                         <th>S.No</th>
                         <th>Book Name</th>
+                        <th>Author Name</th>
+                        <th>Number of Copies</th>
                         <th>Added Date</th>
                     </tr>
                     {
@@ -138,7 +135,9 @@ function AddBook() {
                                 <tr key={index}>
                                     <td>{index + 1}</td>
                                     <td>{book.bookName}</td>
-                                    <td>{book.createdAt.substring(0, 10)}</td>
+                                    <td>{book.author}</td>
+                                    <td>{book.bookCountAvailable}</td>
+                                    <td>{book.createdAt.substring(0, 10)}</td>                                   
                                 </tr>
                             )
                         })
@@ -147,6 +146,6 @@ function AddBook() {
             </div>
         </div>
     )
-}
+}   
 
 export default AddBook

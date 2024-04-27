@@ -156,7 +156,7 @@ function Return() {
                                     <td>{data.fromDate}</td>
                                     <td>{data.toDate}</td>
                                     <td>{(Math.floor(( Date.parse(moment(new Date()).format("MM/DD/YYYY")) - Date.parse(data.toDate) ) / 86400000)) <= 0 ? 0 : (Math.floor(( Date.parse(moment(new Date()).format("MM/DD/YYYY")) - Date.parse(data.toDate) ) / 86400000))*10}</td>
-                                    <td><button onClick={()=>{returnBook(data._id,data.borrowerId,data.bookId,(Math.floor(( Date.parse(moment(new Date()).format("MM/DD/YYYY")) - Date.parse(data.toDate) ) / 86400000)))}}>Return</button></td>
+                                    <td><button  className="return-button" onClick={()=>{returnBook(data._id,data.borrowerId,data.bookId,(Math.floor(( Date.parse(moment(new Date()).format("MM/DD/YYYY")) - Date.parse(data.toDate) ) / 86400000)))}}>Return</button></td>
                                 </tr>
                             )
                         })
@@ -186,7 +186,7 @@ function Return() {
                                     <td>{data.borrowerName}</td>
                                     <td>{data.fromDate}</td>
                                     <td>{data.toDate}</td>
-                                    <td><button onClick={()=>{convertToIssue(data._id)}}>Convert</button></td>
+                                    <td><button  className="return-button" onClick={()=>{convertToIssue(data._id)}}>Issue</button></td>
                                 </tr>
                             )
                         })

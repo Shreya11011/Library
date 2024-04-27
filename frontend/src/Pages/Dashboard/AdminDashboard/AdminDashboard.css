@@ -170,6 +170,47 @@
 
 /* Admin Dashboard Additions */
 
+.editbook-search {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.edit-search-input {
+  padding: 8px 10px;
+  width: 30%; /* Adjust width as needed */
+  border: 2px solid wheat;
+  border-radius: 15px;
+  text-align: center;
+}
+
+.edit-form-input {
+  padding: 8px 10px;
+  width: 80%; /* Adjust width as needed */
+  border: 2px solid wheat;
+  border-radius: 15px;
+  text-align: center;
+}
+
+.search-edit-book {
+  margin-left: 10px; /* Add margin between input and button */
+  padding: 8px 10px;
+  border: 2px solid wheat;
+  background-color: rgb(242, 62, 68);
+  color: wheat;
+  font-weight: 900;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.search-edit-book:hover {
+  background-color: wheat;
+  color: rgb(234, 68, 74);
+  border: 2px solid rgb(234, 68, 74);
+  transition: all ease 0.5s;
+}
+
+
 .addbook-form-input,
 .addmember-form-input{
   padding: 8px;
@@ -192,6 +233,7 @@
   border: 1px solid rgb(219, 219, 219);
   background-color: rgb(255, 255, 255);
 }
+
 
 .addbook-form-label{
   
@@ -241,6 +283,45 @@
   text-align: center; /* Align the content to the center */
 }
 
+.return-button {
+  display: block; /* Change the display to block */
+  margin: 0 auto; /* Set top and bottom margins to 0, and left and right margins to auto */
+  padding: 8px 10px;
+  width: 60%;
+  border: 2px solid wheat;
+  background-color: rgb(242, 62, 68);
+  color: wheat;
+  font-weight: 900;
+  border-radius: 15px;
+  text-align: center; /* Align the content to the center */
+}
+
+.return-button:hover {
+  background-color: wheat;
+  color: rgb(234, 68, 74);
+  border: 2px solid rgb(234, 68, 74);
+  transition: all ease 0.5s;
+}
+
+.edit-button {
+  display: block; /* Change the display to block */
+  margin: 0 auto; /* Set top and bottom margins to 0, and left and right margins to auto */
+  padding: 8px 10px;
+  width: 100%;
+  border: 2px solid wheat;
+  background-color: rgb(242, 62, 68);
+  color: wheat;
+  font-weight: 900;
+  border-radius: 15px;
+  text-align: center; /* Align the content to the center */
+}
+
+.edit-button:hover {
+  background-color: wheat;
+  color: rgb(234, 68, 74);
+  border: 2px solid rgb(234, 68, 74);
+  transition: all ease 0.5s;
+}
 
 
 .addbook-submit:hover,
@@ -267,6 +348,7 @@
   font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
   width: 95%;
+  margin-top: 10px;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 50px !important;
@@ -276,7 +358,7 @@
 .admindashboard-table th {
   border: 1px solid #ddd;
   padding: 8px;
-  font-size: 14px;
+  font-size: 16px;
   text-align: center;
 }
 

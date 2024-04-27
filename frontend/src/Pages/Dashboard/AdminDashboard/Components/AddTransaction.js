@@ -55,6 +55,10 @@ function AddTransaction() {
                     isAdmin: user.isAdmin
                 }
                 try {
+
+                    let newBookCountAvailable = book_details.data.bookCountAvailable - 1;
+                    let newBookStatus = book_details.data.bookCountAvailable === 1 ? "NOT AVAILABLE" : book_details.data.status;
+
                     const response = await axios.post(API_URL + "api/transactions/add-transaction", transactionData)
                     if (recentTransactions.length >= 5) {
                         (recentTransactions.splice(-1))
@@ -66,7 +70,8 @@ function AddTransaction() {
 
                     await axios.put(API_URL+"api/books/updatebook/"+bookId,{
                         isAdmin:user.isAdmin,
-                        bookCountAvailable:book_details.data.bookCountAvailable - 1
+                        bookCountAvailable: newBookCountAvailable,
+                        bookStatus: newBookStatus
                     })
 
                     setRecentTransactions([response.data, ...recentTransactions])

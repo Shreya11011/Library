@@ -65,23 +65,33 @@ router.post("/addbook", async (req, res) => {
     }
 })
 
-/* Addding book */
+/* Updating book */
 router.put("/updatebook/:id", async (req, res) => {
-    if (req.body.isAdmin) {
-        try {
+    try {
+        const book = await Book.findById(req.params.id);
+        if (!book) {
+            return res.status(404).json("Book not found.");
+        }
+        // Update book details only if the user is an admin
+        if (req.body.isAdmin) {
             await Book.findByIdAndUpdate(req.params.id, {
-                $set: req.body,
+                $set: {
+                    bookStatus: req.body.bookStatus,
+                    bookCountAvailable: req.body.bookCountAvailable,
+                    language: req.body.language,
+                    author: req.body.author
+                },
             });
-            res.status(200).json("Book details updated successfully");
+            return res.status(200).json("Book details updated successfully");
+        } else {
+            return res.status(403).json("You don't have permission to update book details.");
         }
-        catch (err) {
-            res.status(504).json(err);
-        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json("Internal server error");
     }
-    else {
-        return res.status(403).json("You dont have permission to delete a book!");
-    }
-})
+});
+
 
 /* Remove book  */
 router.delete("/removebook/:id", async (req, res) => {
@@ -99,5 +109,35 @@ router.delete("/removebook/:id", async (req, res) => {
         return res.status(403).json("You dont have permission to delete a book!");
     }
 })
+
+/* Get Book by name, ID, or author */
+router.get("/getbook", async (req, res) => {
+    const { name, id, author } = req.query;
+    try {
+        let books;
+        if (id) {
+            books = await Book.find({ _id: id }).populate("transactions");
+        } else if (name) {
+            // Case-insensitive search for substring within the name
+            books = await Book.find({ bookName: { $regex: name, $options: 'i' } }).populate("transactions");
+        } else if (author) {
+            // Case-insensitive search for substring within the author
+            books = await Book.find({ author: { $regex: author, $options: 'i' } }).populate("transactions");
+        } else {
+            return res.status(400).json("Please provide either name, ID, or author to search for a book.");
+        }
+
+        if (!books || books.length === 0) {
+            return res.status(404).json("No books found.");
+        }
+
+        res.status(200).json(books);
+    } catch (err) {
+        return res.status(500).json(err);
+    }
+})
+
+
+
 
 export default router

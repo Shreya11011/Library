@@ -117,6 +117,7 @@ function AddMember() {
                             fluid
                             selection
                             options={userTypes}
+                            defaultValue={userTypes[0].value}
                             onChange={(event, data) => setUserType(data.value)}
                         />
                     </div>
@@ -130,7 +131,7 @@ function AddMember() {
                 </div>
                 <div className="form-row">
                     <label className="addmember-form-label" htmlFor="mobileNumber">Mobile Number <span className="required-field">*</span></label>
-                    <input className="addmember-form-input" type="text" value={mobileNumber} required onChange={(e) => setMobileNumber(e.target.value)}></input>
+                    <input className="addmember-form-input" type="text" value={mobileNumber} maxLength={10} pattern="[0-9]*" required onChange={(e) => setMobileNumber(e.target.value)}></input>
 
                     <label className="addmember-form-label" htmlFor="gender">Gender <span className="required-field">*</span></label>
                     <div className='semanticdropdown-addmember'>
@@ -146,7 +147,7 @@ function AddMember() {
                 </div>
                 <div className="form-row">
                     <label className="addmember-form-label" htmlFor="age">Age <span className="required-field">*</span></label>
-                    <input className="addmember-form-input" type="text" value={age} required onChange={(e) => setAge(e.target.value)}></input>
+                    <input className="addmember-form-input" type="text" value={age} pattern="[0-9]*" required onChange={(e) => { const inputValue = e.target.value; if (/^\d*$/.test(inputValue)) {setAge(inputValue); }}}></input>
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                     <label className="addmember-form-label" htmlFor="dob">Date of Birth <span className="required-field">*</span></label>
                     <DatePicker
@@ -172,7 +173,7 @@ function AddMember() {
                 <input className="addmember-submit" type="submit" value="SUBMIT" disabled={isLoading} ></input>
 
             </form>
-            <p className="dashboard-option-title">Recent Added Member</p>
+            <p className="dashboard-option-title">Recently Added Member</p>
             <div className="dashboard-title-line"></div>
             <table className='admindashboard-table'>
                 <tr>
@@ -180,6 +181,7 @@ function AddMember() {
                     <th>Member Type</th>
                     <th>Member ID</th>
                     <th>Member Name</th>
+                    <th>Member Email</th>
                 </tr>
                 {
                     recentAddedMembers.map((member, index) => {
@@ -189,6 +191,7 @@ function AddMember() {
                                 <td>{member.userType}</td>
                                 <td>{member.userType === "Student" ? member.admissionId : member.employeeId}</td>
                                 <td>{member.userFullName}</td>
+                                <td>{member.email}</td>
                             </tr>
                         )
                     })

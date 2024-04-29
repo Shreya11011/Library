@@ -1,0 +1,41 @@
+.fetch-books {
+    margin-top: 20px;
+  }
+  
+  .fetch-books h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    text-align: center; /* Align title to center */
+  }
+  
+  .book-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px; /* Add space after the table */
+  }
+  
+  .book-table th, .book-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .book-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .book-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .book-table tbody tr:hover {
+    background-color: #ddd;
+  }
+  
+  .book-table td span {
+    display: block;
+    margin-bottom: 2px;
+  }
+  
+  /* Adjust as needed */
+  

@@ -1,18 +1,22 @@
 import React, { useContext, useEffect, useState } from "react";
 import "../AdminDashboard/AdminDashboard.css";
 import "./MemberDashboard.css";
-
+import Searchbooks from "./Searchbooks";
 import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import { IconButton } from "@material-ui/core";
-import CloseIcon from "@material-ui/icons/Close";
-import DoubleArrowIcon from "@material-ui/icons/DoubleArrow";
+import SearchIcon from '@material-ui/icons/Search';
+import LocalLibraryIcon from "@material-ui/icons/LocalLibrary";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
+import CloseIcon from "@material-ui/icons/Close";
+import Fetchbooks from "./Fetchbooks";
+import DoubleArrowIcon from "@material-ui/icons/DoubleArrow";
+import { IconButton } from "@material-ui/core";
 import { AuthContext } from "../../../Context/AuthContext";
 import axios from "axios";
 import moment from "moment";
 
 function MemberDashboard() {
+  const [active, setActive] = useState("profile");
   const [sidebar, setSidebar] = useState(false);
 
   const API_URL = process.env.REACT_APP_API_URL;
@@ -61,18 +65,60 @@ function MemberDashboard() {
           </div>
           <a
             href="#profile@member"
-            className={`dashboard-option clicked`}
+            className={`dashboard-option ${
+              active === "profile" ? "clicked" : ""
+            }`}
             onClick={() => {
+              setActive("profile");
               setSidebar(false);
             }}
           >
             <AccountCircleIcon className="dashboard-option-icon" /> Profile
           </a>
           <a
+            href="#activebooks@member"
+            className={`dashboard-option ${
+              active === "active" ? "clicked" : ""
+            }`}
+            onClick={() => {
+              setActive("active");
+              setSidebar(false);
+            }}
+          >
+          <LocalLibraryIcon className="dashboard-option-icon" /> All Books
+          </a>
+          <a
+            href="#browsebook"
+            className={`dashboard-option ${
+              active === "reserved" ? "clicked" : ""
+            }`}
+            onClick={() => {
+              setActive("reserved");
+              setSidebar(false);
+            }}
+          >
+          <SearchIcon className="dashboard-option-icon" /> Search Books
+          </a>
+          <a
+            href="#searchbook"
+            className={`dashboard-option ${
+              active === "reserved" ? "clicked" : ""
+            }`}
+            onClick={() => {
+              setActive("reserved");
+              setSidebar(false);
+            }}
+          >
+            </a>
+          
+          <a
             href="#profile@member"
-            className={`dashboard-option`}
+            className={`dashboard-option ${
+              active === "logout" ? "clicked" : ""
+            }`}
             onClick={() => {
               logout();
+              setActive("reserved")
               setSidebar(false);
             }}
           >
@@ -80,6 +126,7 @@ function MemberDashboard() {
           </a>
         </div>
 
+        {/* Profile */}
         <div className="dashboard-option-content">
           <div className="member-profile-content" id="profile@member">
             <div className="user-details-topbar">
@@ -177,7 +224,8 @@ function MemberDashboard() {
               </div>
             </div>
           </div>
-
+          
+          {/* Issued Books */}
           <div className="member-activebooks-content" id="activebooks@member">
             <p className="member-dashboard-heading">Issued</p>
             <table className="activebooks-table">
@@ -200,72 +248,34 @@ function MemberDashboard() {
                       <td>{data.fromDate}</td>
                       <td>{data.toDate}</td>
                       <td>
-                        {Math.max(
-                          0,
-                          Math.floor(
-                            (moment().diff(moment(data.toDate), "days")) *
-                              10
-                          )
-                        )}
+                        {Math.floor(
+                          (Date.parse(moment(new Date()).format("MM/DD/YYYY")) -
+                            Date.parse(data.toDate)) /
+                            86400000
+                        ) <= 0
+                          ? 0
+                          : Math.floor(
+                              (Date.parse(
+                                moment(new Date()).format("MM/DD/YYYY")
+                              ) -
+                                Date.parse(data.toDate)) /
+                                86400000
+                            ) * 10}
                       </td>
                     </tr>
                   );
                 })}
             </table>
+          </div>  
+          <div className="member-profile-content" id="browsebook">
+                <Fetchbooks />
           </div>
-
-          <div className="member-reservedbooks-content" id="reservedbooks@member">
-            <p className="member-dashboard-heading">Reserved</p>
-            <table className="activebooks-table">
-              <tr>
-                <th>S.No</th>
-                <th>Book-Name</th>
-                <th>From</th>
-                <th>To</th>
-              </tr>
-              {memberDetails?.activeTransactions
-                ?.filter((data) => {
-                  return data.transactionType === "Reserved";
-                })
-                .map((data, index) => {
-                  return (
-                    <tr key={index}>
-                      <td>{index + 1}</td>
-                      <td>{data.bookName}</td>
-                      <td>{data.fromDate}</td>
-                      <td>{data.toDate}</td>
-                    </tr>
-                  );
-                })}
-            </table>
+          <div className="member-profile-content" id="searchbook">
+                <Searchbooks />
           </div>
-
-          <div className="member-history-content" id="history@member">
-            <p className="member-dashboard-heading">History</p>
-            <table className="activebooks-table">
-              <tr>
-                <th>S.No</th>
-                <th>Book-Name</th>
-                <th>From</th>
-                <th>To</th>
-                <th>Return Date</th>
-              </tr>
-              {memberDetails?.prevTransactions?.map((data, index) => {
-                return (
-                  <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td>{data.bookName}</td>
-                    <td>{data.fromDate}</td>
-                    <td>{data.toDate}</td>
-                    <td>{data.returnDate}</td>
-                  </tr>
-                );
-              })}
-            </table>
-          </div>
+          </div>       
         </div>
-      </div>
-    </div>
+      </div> 
   );
 }
 

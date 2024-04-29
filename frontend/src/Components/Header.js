@@ -25,19 +25,19 @@ function Header() {
             </Link>
             </div>
             <div className='nav-right'>
-                <input className='search-input' type='text' placeholder='Search your book here'/>
+                
                 <ul className={menutoggle ? "nav-options active" : "nav-options"}>
                     <li className="option" onClick={() => { closeMenu() }}>
                         
                     </li>
                     <li className="option" onClick={() => { closeMenu() }}>
-                        <Link to='/books'>
-                        <a href="#books">LogIn</a>
+                        <Link to='/signin'>
+                        <a href="signin">LogIn</a>
                         </Link>
                     </li>
                     <li className="option" onClick={() => { closeMenu() }}>
-                        <Link to='/signin'>
-                        <a href='signin'>SignUp</a>
+                        <Link to='/signup'>
+                        <a href='signup'>SignUp</a>
                         </Link>
                     </li>
                 </ul>

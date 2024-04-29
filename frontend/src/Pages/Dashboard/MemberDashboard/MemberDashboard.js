@@ -60,8 +60,8 @@ function MemberDashboard() {
           className={sidebar ? "dashboard-options active" : "dashboard-options"}
         >
           <div className="dashboard-logo">
-            <LibraryBooksIcon style={{ fontSize: 50 }} />
-            <p className="logo-name">LCMS</p>
+          <img src="https://www.pfw.edu/sites/default/files/styles/50_50_landscape/public/50-50/AlumniLogoCropped.jpg?h=fb985e55&itok=uzzv1SND" alt="Logo" style={{ width: 90, height: 90 , borderRadius: '50%'}} />
+            <p className="logo-name">CRL</p>
           </div>
           <a
             href="#profile@member"
@@ -78,10 +78,10 @@ function MemberDashboard() {
           <a
             href="#activebooks@member"
             className={`dashboard-option ${
-              active === "active" ? "clicked" : ""
+              active === "browsebook" ? "clicked" : ""
             }`}
             onClick={() => {
-              setActive("active");
+              setActive("browsebook");
               setSidebar(false);
             }}
           >
@@ -90,26 +90,16 @@ function MemberDashboard() {
           <a
             href="#browsebook"
             className={`dashboard-option ${
-              active === "reserved" ? "clicked" : ""
+              active === "searchbook" ? "clicked" : ""
             }`}
             onClick={() => {
-              setActive("reserved");
+              setActive("searchbook");
               setSidebar(false);
             }}
           >
           <SearchIcon className="dashboard-option-icon" /> Search Books
           </a>
-          <a
-            href="#searchbook"
-            className={`dashboard-option ${
-              active === "reserved" ? "clicked" : ""
-            }`}
-            onClick={() => {
-              setActive("reserved");
-              setSidebar(false);
-            }}
-          >
-            </a>
+          
           
           <a
             href="#profile@member"
@@ -128,154 +118,163 @@ function MemberDashboard() {
 
         {/* Profile */}
         <div className="dashboard-option-content">
-          <div className="member-profile-content" id="profile@member">
-            <div className="user-details-topbar">
-              <img
-                className="user-profileimage"
-                src="./assets/images/Profile.png"
-                alt=""
-              ></img>
-              <div className="user-info">
-                <p className="user-name">{memberDetails?.userFullName}</p>
-                <p className="user-id">
-                  {memberDetails?.userType === "Student"
-                    ? memberDetails?.admissionId
-                    : memberDetails?.employeeId}
-                </p>
-                <p className="user-email">{memberDetails?.email}</p>
-                <p className="user-phone">{memberDetails?.mobileNumber}</p>
+          {active === "profile" && (
+            <div className="member-profile-content" id="profile@member">
+              <div className="user-details-topbar">
+                <img
+                  className="user-profileimage"
+                  src="./assets/images/Profile.png"
+                  alt=""
+                ></img>
+                <div className="user-info">
+                  <p className="user-name">{memberDetails?.userFullName}</p>
+                  <p className="user-id">
+                    {memberDetails?.userType === "Student"
+                      ? memberDetails?.admissionId
+                      : memberDetails?.employeeId}
+                  </p>
+                  <p className="user-email">{memberDetails?.email}</p>
+                  <p className="user-phone">{memberDetails?.mobileNumber}</p>
+                </div>
+              </div>
+              <div className="user-details-specific">
+                <div className="specific-left">
+                  <div className="specific-left-top">
+                    <p className="specific-left-topic">
+                      <span style={{ fontSize: "18px" }}>
+                        <b>Age</b>
+                      </span>
+                      <span style={{ fontSize: "16px" }}>
+                        {memberDetails?.age}
+                      </span>
+                    </p>
+                    <p className="specific-left-topic">
+                      <span style={{ fontSize: "18px" }}>
+                        <b>Gender</b>
+                      </span>
+                      <span style={{ fontSize: "16px" }}>
+                        {memberDetails?.gender}
+                      </span>
+                    </p>
+                  </div>
+                  <div className="specific-left-bottom">
+                    <p className="specific-left-topic">
+                      <span style={{ fontSize: "18px" }}>
+                        <b>DOB</b>
+                      </span>
+                      <span style={{ fontSize: "16px" }}>
+                        {memberDetails?.dob}
+                      </span>
+                    </p>
+                    <p className="specific-left-topic">
+                      <span style={{ fontSize: "18px" }}>
+                        <b>Address</b>
+                      </span>
+                      <span style={{ fontSize: "16px" }}>
+                        {memberDetails?.address}
+                      </span>
+                    </p>
+                  </div>
+                </div>
+                <div className="specific-right">
+                  <div className="specific-right-top">
+                    <p className="specific-right-topic">
+                      <b>Points</b>
+                    </p>
+                    <p
+                      style={{
+                        fontSize: "25px",
+                        fontWeight: "500",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        marginTop: "15px",
+                      }}
+                    >
+                      540
+                    </p>
+                  </div>
+                  <div className="dashboard-title-line"></div>
+                  <div className="specific-right-bottom">
+                    <p className="specific-right-topic">
+                      <b>Rank</b>
+                    </p>
+                    <p
+                      style={{
+                        fontSize: "25px",
+                        fontWeight: "500",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        marginTop: "15px",
+                      }}
+                    >
+                      {memberDetails?.points}
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
-            <div className="user-details-specific">
-              <div className="specific-left">
-                <div className="specific-left-top">
-                  <p className="specific-left-topic">
-                    <span style={{ fontSize: "18px" }}>
-                      <b>Age</b>
-                    </span>
-                    <span style={{ fontSize: "16px" }}>
-                      {memberDetails?.age}
-                    </span>
-                  </p>
-                  <p className="specific-left-topic">
-                    <span style={{ fontSize: "18px" }}>
-                      <b>Gender</b>
-                    </span>
-                    <span style={{ fontSize: "16px" }}>
-                      {memberDetails?.gender}
-                    </span>
-                  </p>
-                </div>
-                <div className="specific-left-bottom">
-                  <p className="specific-left-topic">
-                    <span style={{ fontSize: "18px" }}>
-                      <b>DOB</b>
-                    </span>
-                    <span style={{ fontSize: "16px" }}>
-                      {memberDetails?.dob}
-                    </span>
-                  </p>
-                  <p className="specific-left-topic">
-                    <span style={{ fontSize: "18px" }}>
-                      <b>Address</b>
-                    </span>
-                    <span style={{ fontSize: "16px" }}>
-                      {memberDetails?.address}
-                    </span>
-                  </p>
-                </div>
-              </div>
-              <div className="specific-right">
-                <div className="specific-right-top">
-                  <p className="specific-right-topic">
-                    <b>Points</b>
-                  </p>
-                  <p
-                    style={{
-                      fontSize: "25px",
-                      fontWeight: "500",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      marginTop: "15px",
-                    }}
-                  >
-                    540
-                  </p>
-                </div>
-                <div className="dashboard-title-line"></div>
-                <div className="specific-right-bottom">
-                  <p className="specific-right-topic">
-                    <b>Rank</b>
-                  </p>
-                  <p
-                    style={{
-                      fontSize: "25px",
-                      fontWeight: "500",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      marginTop: "15px",
-                    }}
-                  >
-                    {memberDetails?.points}
-                  </p>
-                </div>
-              </div>
+          )}
+
+          {active === "profile" && (
+            <div className="member-activebooks-content" id="activebooks@member">
+              <p className="member-dashboard-heading">Issued</p>
+              <table className="activebooks-table">
+                <tr>
+                  <th>S.No</th>
+                  <th>Book-Name</th>
+                  <th>From Date</th>
+                  <th>To Date</th>
+                  <th>Fine</th>
+                </tr>
+                {memberDetails?.activeTransactions
+                  ?.filter((data) => {
+                    return data.transactionType === "Issued";
+                  })
+                  .map((data, index) => {
+                    return (
+                      <tr key={index}>
+                        <td>{index + 1}</td>
+                        <td>{data.bookName}</td>
+                        <td>{data.fromDate}</td>
+                        <td>{data.toDate}</td>
+                        <td>
+                          {Math.floor(
+                            (Date.parse(moment(new Date()).format("MM/DD/YYYY")) -
+                              Date.parse(data.toDate)) /
+                              86400000
+                          ) <= 0
+                            ? 0
+                            : Math.floor(
+                                (Date.parse(
+                                  moment(new Date()).format("MM/DD/YYYY")
+                                ) -
+                                  Date.parse(data.toDate)) /
+                                  86400000
+                              ) * 10}
+                        </td>
+                      </tr>
+                    );
+                  })}
+              </table>
             </div>
-          </div>
-          
-          {/* Issued Books */}
-          <div className="member-activebooks-content" id="activebooks@member">
-            <p className="member-dashboard-heading">Issued</p>
-            <table className="activebooks-table">
-              <tr>
-                <th>S.No</th>
-                <th>Book-Name</th>
-                <th>From Date</th>
-                <th>To Date</th>
-                <th>Fine</th>
-              </tr>
-              {memberDetails?.activeTransactions
-                ?.filter((data) => {
-                  return data.transactionType === "Issued";
-                })
-                .map((data, index) => {
-                  return (
-                    <tr key={index}>
-                      <td>{index + 1}</td>
-                      <td>{data.bookName}</td>
-                      <td>{data.fromDate}</td>
-                      <td>{data.toDate}</td>
-                      <td>
-                        {Math.floor(
-                          (Date.parse(moment(new Date()).format("MM/DD/YYYY")) -
-                            Date.parse(data.toDate)) /
-                            86400000
-                        ) <= 0
-                          ? 0
-                          : Math.floor(
-                              (Date.parse(
-                                moment(new Date()).format("MM/DD/YYYY")
-                              ) -
-                                Date.parse(data.toDate)) /
-                                86400000
-                            ) * 10}
-                      </td>
-                    </tr>
-                  );
-                })}
-            </table>
-          </div>  
-          <div className="member-profile-content" id="browsebook">
-                <Fetchbooks />
-          </div>
-          <div className="member-profile-content" id="searchbook">
-                <Searchbooks />
-          </div>
-          </div>       
+          )}
+
+          {active === "browsebook" && (
+            <div className="member-profile-content" id="browsebook">
+              <Fetchbooks />
+            </div>
+          )}
+
+          {active === "searchbook" && (
+            <div className="member-profile-content" id="searchbook">
+              <Searchbooks />
+            </div>
+          )}
         </div>
-      </div> 
+      </div>
+    </div>
   );
 }
 

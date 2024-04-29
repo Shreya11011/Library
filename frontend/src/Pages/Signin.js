@@ -3,6 +3,7 @@ import './Signin.css'
 import axios from 'axios'
 import { AuthContext } from '../Context/AuthContext.js'
 import Switch from '@material-ui/core/Switch';
+import { Link } from 'react-router-dom';
 
 function Signin() {
     const [isStudent, setIsStudent] = useState(true)
@@ -57,7 +58,7 @@ function Signin() {
                     <a className="forget-pass" href="#home">Forgot password?</a>
                 </form>
                 <div className='signup-option'>
-                    <p className="signup-question">Don't have an account? Contact Librarian</p>
+                    <p className="signup-question">Don't have an account?<Link to='/signup'>SignUp</Link></p>
                 </div>
             </div>
         </div>

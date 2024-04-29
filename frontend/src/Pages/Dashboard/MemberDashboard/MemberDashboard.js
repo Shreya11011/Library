@@ -4,19 +4,15 @@ import "./MemberDashboard.css";
 
 import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import BookIcon from "@material-ui/icons/Book";
-import HistoryIcon from "@material-ui/icons/History";
-import LocalLibraryIcon from "@material-ui/icons/LocalLibrary";
-import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
+import { IconButton } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import DoubleArrowIcon from "@material-ui/icons/DoubleArrow";
-import { IconButton } from "@material-ui/core";
+import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 import { AuthContext } from "../../../Context/AuthContext";
 import axios from "axios";
 import moment from "moment";
 
 function MemberDashboard() {
-  const [active, setActive] = useState("profile");
   const [sidebar, setSidebar] = useState(false);
 
   const API_URL = process.env.REACT_APP_API_URL;
@@ -65,57 +61,16 @@ function MemberDashboard() {
           </div>
           <a
             href="#profile@member"
-            className={`dashboard-option ${
-              active === "profile" ? "clicked" : ""
-            }`}
+            className={`dashboard-option clicked`}
             onClick={() => {
-              setActive("profile");
               setSidebar(false);
             }}
           >
             <AccountCircleIcon className="dashboard-option-icon" /> Profile
           </a>
           <a
-            href="#activebooks@member"
-            className={`dashboard-option ${
-              active === "active" ? "clicked" : ""
-            }`}
-            onClick={() => {
-              setActive("active");
-              setSidebar(false);
-            }}
-          >
-            <LocalLibraryIcon className="dashboard-option-icon" /> Active
-          </a>
-          <a
-            href="#reservedbook@member"
-            className={`dashboard-option ${
-              active === "reserved" ? "clicked" : ""
-            }`}
-            onClick={() => {
-              setActive("reserved");
-              setSidebar(false);
-            }}
-          >
-            <BookIcon className="dashboard-option-icon" /> Reserved
-          </a>
-          <a
-            href="#history@member"
-            className={`dashboard-option ${
-              active === "history" ? "clicked" : ""
-            }`}
-            onClick={() => {
-              setActive("history");
-              setSidebar(false);
-            }}
-          >
-            <HistoryIcon className="dashboard-option-icon" /> History
-          </a>
-          <a
             href="#profile@member"
-            className={`dashboard-option ${
-              active === "logout" ? "clicked" : ""
-            }`}
+            className={`dashboard-option`}
             onClick={() => {
               logout();
               setSidebar(false);
@@ -245,19 +200,13 @@ function MemberDashboard() {
                       <td>{data.fromDate}</td>
                       <td>{data.toDate}</td>
                       <td>
-                        {Math.floor(
-                          (Date.parse(moment(new Date()).format("MM/DD/YYYY")) -
-                            Date.parse(data.toDate)) /
-                            86400000
-                        ) <= 0
-                          ? 0
-                          : Math.floor(
-                              (Date.parse(
-                                moment(new Date()).format("MM/DD/YYYY")
-                              ) -
-                                Date.parse(data.toDate)) /
-                                86400000
-                            ) * 10}
+                        {Math.max(
+                          0,
+                          Math.floor(
+                            (moment().diff(moment(data.toDate), "days")) *
+                              10
+                          )
+                        )}
                       </td>
                     </tr>
                   );
@@ -265,10 +214,7 @@ function MemberDashboard() {
             </table>
           </div>
 
-          <div
-            className="member-reservedbooks-content"
-            id="reservedbooks@member"
-          >
+          <div className="member-reservedbooks-content" id="reservedbooks@member">
             <p className="member-dashboard-heading">Reserved</p>
             <table className="activebooks-table">
               <tr>
@@ -293,6 +239,7 @@ function MemberDashboard() {
                 })}
             </table>
           </div>
+
           <div className="member-history-content" id="history@member">
             <p className="member-dashboard-heading">History</p>
             <table className="activebooks-table">

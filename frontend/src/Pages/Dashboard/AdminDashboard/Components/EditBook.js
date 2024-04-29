@@ -71,6 +71,25 @@ function EditBook() {
         setUpdatedBookData({}); // Reset updated book data
     };
 
+    const handleDelete = async (bookId) => {
+        try {
+            const response = await axios.delete(API_URL + 'api/books/removebook/' + bookId, {
+                data: {
+                    isAdmin: user.isAdmin,
+                },
+            });
+            console.log(response.data);
+            alert('Book Deleted Successfully 🗑️');
+
+            // Filter out the deleted book from the search results
+            const updatedResults = searchResults.filter(book => book._id !== bookId);
+            setSearchResults(updatedResults);
+        } catch (err) {
+            console.log(err);
+            alert('Error deleting book. Please try again.');
+        }
+    };
+
     return (
         <div>
             <p className="dashboard-option-title">EDIT BOOK</p>
@@ -123,6 +142,8 @@ function EditBook() {
                                     ) : (
                                         <button className="edit-button" onClick={() => handleEdit(book)}>Edit</button>
                                     )}
+                                    
+                                    <button className="edit-button" onClick={() => handleDelete(book._id)}>Delete</button>
                                 </td>
                             </tr>
                         ))}

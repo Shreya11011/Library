@@ -42,7 +42,7 @@ function AdminDashboard() {
                 </div>
                 <div className={sidebar ? "dashboard-options active" : "dashboard-options"}>
                     <div className='dashboard-logo'>
-                        <LibraryBooksIcon style={{ fontSize: 50 }} />
+                    <img src="https://www.pfw.edu/sites/default/files/styles/50_50_landscape/public/50-50/AlumniLogoCropped.jpg?h=fb985e55&itok=uzzv1SND" alt="Logo" style={{ width: 90, height: 90 , borderRadius: '50%'}} />
                         <p className="logo-name">CRL</p>
                     </div>
                     <p className={`dashboard-option ${active === "addbook" ? "clicked" : ""}`} onClick={() => { setActive("addbook"); setSidebar(false) }}><BookIcon className='dashboard-option-icon' />Add Book</p>

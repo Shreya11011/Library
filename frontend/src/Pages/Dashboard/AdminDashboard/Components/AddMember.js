@@ -138,26 +138,18 @@ function AddMember() {
                     <input className="addmember-form-input" type="text" name="userFullName" value={userFullName} required onChange={(e) => setUserFullName(e.target.value)}></input>
 
                     <label className="addmember-form-label" htmlFor={userType === "Student" ? "admissionId" : "employeeId"}>{userType === "Student" ? "Admission Id " : "Employee Id "}<span className="required-field">*</span></label>
-                    <input className="addmember-form-input" type="text" value={userType === "Student" ? admissionId : employeeId} required onChange={(e) => { userType === "Student" ? setAdmissionId(e.target.value) : setEmployeeId(e.target.value) }}></input><br />
+                    <input className="addmember-form-input" name="employeeIdInput" type="text" value={userType === "Student" ? admissionId : employeeId} required onChange={(e) => { userType === "Student" ? setAdmissionId(e.target.value) : setEmployeeId(e.target.value) }}></input><br />
                 </div>
                 <div className="form-row">
                     <label className="addmember-form-label" htmlFor="mobileNumber">Mobile Number <span className="required-field">*</span></label>
-                    <input className="addmember-form-input" type="text" value={mobileNumber} maxLength={10} pattern="[0-9]*" required onChange={(e) => setMobileNumber(e.target.value)}></input>
+                    <input className="addmember-form-input" name="mobileNumber" type="text" value={mobileNumber} maxLength={10} pattern="[0-9]*" required onChange={(e) => setMobileNumber(e.target.value)}></input>
 
-                    <label className="addmember-form-label" htmlFor="gender">Gender <span className="required-field">*</span></label>
-                    <div className='semanticdropdown-addmember'>
-                        <Dropdown
-                            placeholder='User Type'
-                            fluid
-                            selection
-                            value={gender}
-                            options={genderTypes}
-                            onChange={(event, data) => setGender(data.value)}
-                        />
-                    </div>
+                    <label className="addmember-form-label" htmlFor="address">Address <span className="required-field">*</span></label>
+                    <input className="addmember-form-input address-field" name="address" value={address} type="text" required onChange={(e) => setAddress(e.target.value)}></input>
+
                 </div>
-                <div className="form-row">
-                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                
+                <div style={{ display: 'flex', alignItems: 'center', marginTop: '30px' }}>
                         <label className="addmember-form-label" htmlFor="dob">Date of Birth <span className="required-field">*</span></label>
                         <DatePicker
                             className="date-picker-addmember"
@@ -165,19 +157,29 @@ function AddMember() {
                             selected={dob}
                             onChange={(date) => { setDob(date); setDobString(moment(date).format("MM/DD/YYYY")) }}
                             dateFormat="MM/dd/yyyy"
+                            style={{ width: '70%' }}
+                        />
+                    </div><br />
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <label className="addmember-form-label" htmlFor="gender">Gender <span className="required-field">*</span></label>
+                    <div className='semanticdropdown-addmember'>
+                        <Dropdown
+                            placeholder='Gender'
+                            fluid
+                            selection
+                            value={gender}
+                            options={genderTypes}
+                            onChange={(event, data) => setGender(data.value)}
+                            
                         />
                     </div>
-                
-                
-                    <label className="addmember-form-label" htmlFor="address">Address <span className="required-field">*</span></label>
-                    <input className="addmember-form-input address-field" value={address} type="text" required onChange={(e) => setAddress(e.target.value)}></input>
-                </div>
+                    </div>
                 <div style={{ marginTop: '20px' }}>
                     <label className="addmember-form-label" htmlFor="email">Email <span className="required-field">*</span></label>
-                    <input className="addmember-form-input" type="email" value={email} required onChange={(e) => setEmail(e.target.value)}></input>
+                    <input className="addmember-form-input" name="email" type="email" value={email} required onChange={(e) => setEmail(e.target.value)}></input>
 
                     <label className="addmember-form-label" htmlFor="password">Password <span className="required-field">*</span></label>
-                    <input className="addmember-form-input" type="password" value={password} onChange={(e) => setPassword(e.target.value)}></input><br />
+                    <input className="addmember-form-input" name="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)}></input><br />
                 </div>
                 <input className="addmember-submit" type="submit" value="SUBMIT" disabled={isLoading}></input>
 

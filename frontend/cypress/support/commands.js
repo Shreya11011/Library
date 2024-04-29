@@ -27,3 +27,17 @@
 Cypress.Commands.add('getDataTest', (dataTestSelector) => { 
     return cy.get(`[data-test="${dataTestSelector}"]`)
  })
+
+ Cypress.Commands.add('loginAsStaffMember', () => {
+    cy.visit('/signin')
+    cy.get('.dashboard-option').should('not.exist')
+    cy.get('.signin-container').within(() => {
+      cy.get('.persontype-question').contains('Are you a Staff member ?')
+      cy.get('input[type="checkbox"]').check()
+      cy.get('.signin-textbox[name="employeeId"]').type('admin2')
+      cy.get('.signin-textbox[name="psw"]').type('admin2')
+      cy.get('.signin-button').click()
+    });
+    cy.get('.dashboard-option').contains('Add Book').should('be.visible')
+  })
+  

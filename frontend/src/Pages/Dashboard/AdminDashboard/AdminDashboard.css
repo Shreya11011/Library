@@ -210,11 +210,18 @@
   transition: all ease 0.5s;
 }
 
+.addbook-form-input {
+  margin-top: 5px; /* Adjust top margin */
+  padding: 8px; /* Add padding for better appearance */
+  font-size: 16px; /* Adjust font size */
+  border: 1px solid rgb(219, 219, 219);
+  background-color: rgb(255, 255, 255);
+  border-radius: 5px;
+}
 
-.addbook-form-input,
+
 .addmember-form-input{
   padding: 8px;
-  width: calc(100% - 800px); /* Adjusted width to accommodate label + margin */
   outline: none;
   border-radius: 5px;
   font-size: 18px;
@@ -412,8 +419,8 @@
   margin-top: 10px;
   max-width: 290px;
   border-radius: 10px;
-  width: 80%;
-  margin-left: 55px;
+  width: 100%;
+  margin-left: 25px;
 }
 
 @media screen and (max-width: 768px) {

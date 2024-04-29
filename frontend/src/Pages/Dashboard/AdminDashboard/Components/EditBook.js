@@ -97,12 +97,14 @@ function EditBook() {
             <div className="editbook-search">
                 <input
                     type="text"
+                    name='editBookInput'
                     className="edit-search-input"
+                    data-test="editBookInput"  
                     placeholder="Search by book name, ID, or author"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                 />
-                <button className="search-edit-book" onClick={searchBook}>Search</button>
+                <button className="search-edit-book" data-test="searchButton" onClick={searchBook}>Search</button>
             </div>
             {searchResults.length > 0 && (
                 <table className='admindashboard-table' style={{ marginTop: '50px' }}>
@@ -119,7 +121,7 @@ function EditBook() {
                     <tbody>
                         {searchResults.map((book) => (
                             <tr key={book._id}>
-                                <td>{book.bookName}</td>
+                                <td data-test={`bookName-${book._id}`}>{book.bookName}</td>
                                 <td>{selectedBook === book ? <input className="edit-form-input" type="text" value={updatedBookData.author || book.author} onChange={(e) => setUpdatedBookData({ ...updatedBookData, author: e.target.value })} /> : book.author}</td>
                                 <td>
                                     {selectedBook === book ? (
@@ -131,16 +133,16 @@ function EditBook() {
                                         book.bookStatus
                                     )}
                                 </td>
-                                <td>{selectedBook === book ? <input className="edit-form-input" type="number" value={updatedBookData.bookCountAvailable || book.bookCountAvailable} onChange={(e) => setUpdatedBookData({ ...updatedBookData, bookCountAvailable: e.target.value })} /> : book.bookCountAvailable}</td>
+                                <td>{selectedBook === book ? <input className="edit-form-input" data-test="bookCountInput" type="number" value={updatedBookData.bookCountAvailable || book.bookCountAvailable} onChange={(e) => setUpdatedBookData({ ...updatedBookData, bookCountAvailable: e.target.value })} /> : book.bookCountAvailable}</td>
                                 <td>{selectedBook === book ? <input className="edit-form-input" type="text" value={updatedBookData.language || book.language} onChange={(e) => setUpdatedBookData({ ...updatedBookData, language: e.target.value })} /> : book.language}</td>
                                 <td>
                                     {selectedBook === book ? (
                                         <>
-                                            <button className="edit-button" onClick={handleSave}>Save</button>
+                                            <button data-test="saveButton" className="edit-button" onClick={handleSave}>Save</button>
                                             <button className="edit-button" onClick={handleCancel}>Cancel</button>
                                         </>
                                     ) : (
-                                        <button className="edit-button" onClick={() => handleEdit(book)}>Edit</button>
+                                        <button data-test="editButton" className="edit-button" onClick={() => handleEdit(book)}>Edit</button>
                                     )}
                                     
                                     <button className="edit-button" onClick={() => handleDelete(book._id)}>Delete</button>

@@ -50,7 +50,7 @@ router.post("/signin", async (req, res) => {
     console.log(user, "user");
 
     !user && res.status(404).json("User not found");
-    //const validPass = true;                                 // change it
+    //const validPass = true;                                 // change it if want to access dashboards without password
     const validPass = await bcrypt.compare(req.body.password, user.password);
     
     !validPass && res.status(400).json("Wrong Password");

@@ -63,10 +63,22 @@ function Searchbooks() {
                                 <td>{book.bookCountAvailable}</td>
                                 <td>{book.language}</td>
                                 <td>
-                                    {requestedBooks.includes(book._id) ? (
-                                        <button className="edit-button" disabled>Requested</button>
-                                    ) : (
-                                        <button className="edit-button" onClick={() => handleRequest(book)}>REQUEST</button>
+                                    {book.bookStatus !== 'Not Available' && (
+                                        <button
+                                            className="edit-button"
+                                            onClick={() => handleRequest(book)}
+                                            disabled={requestedBooks.includes(book._id)}
+                                        >
+                                            {requestedBooks.includes(book._id) ? 'Requested' : 'REQUEST'}
+                                        </button>
+                                    )}
+                                    {book.bookStatus === 'Not Available' && (
+                                        <button
+                                            className="edit-button"
+                                            disabled
+                                        >
+                                            Cannot Request
+                                        </button>
                                     )}
                                 </td>
                             </tr>
